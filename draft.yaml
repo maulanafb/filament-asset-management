@@ -1,0 +1,54 @@
+# draft.yaml
+
+models:
+  Brand:
+    name: string
+    descriptions: string
+    timestamps: true
+    relationships:
+      hasMany: Asset
+
+  Category:
+    name: string
+    description: string
+    timestamps: true
+    relationships:
+      hasMany: Asset
+
+  Room:
+    name: string
+    description: string
+    timestamps: true
+    relationships:
+      hasMany: Asset
+
+  Asset:
+    serial_number: string
+    name: string
+    image: string
+    qty: integer
+    price: decimal:8,2
+    brand_id: foreignId
+    category_id: foreignId
+    room_id: foreignId
+    condition: enum:new,used,damaged
+    purchase_date: date
+    user_id: foreignId
+    timestamps: true
+    relationships:
+      belongsTo: Brand, Category, Room, User
+      hasMany: MaintenanceHistory
+
+  MaintenanceHistory:
+    asset_id: foreignId
+    maintenance_date: date
+    price: decimal:8,2
+    qty: integer
+    total_price: decimal:8,2
+    notes: text
+    user_id: foreignId
+    timestamps: true
+    relationships:
+      belongsTo: Asset,
+
+seeders: Brand, Category, Room, Asset, MaintenanceHistory
